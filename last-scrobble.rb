@@ -12,16 +12,16 @@ Dotenv.load('.env')
 
 #Get vars from .env file
 api_key = ENV["API_KEY"]
-user = ENV["USER"]
+lastfmuser = ENV["LASTFMUSER"]
 
 #Require for url encoding
 require 'erb'
 include ERB::Util
 
 #Get last last.fm scrobble
-def last_scrobble(api_key,user)
+def last_scrobble(api_key,lastfmuser)
 
-  uri = URI.parse("http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=#{user}&api_key=#{api_key}&format=json")
+  uri = URI.parse("http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=#{lastfmuser}&api_key=#{api_key}&format=json")
   request = Net::HTTP::Get.new(uri)
 
   req_options = {
@@ -57,7 +57,7 @@ end
 current_status = nil
 begin
   #Build status
-  artist,album,track = last_scrobble(api_key,user)
+  artist,album,track = last_scrobble(api_key,lastfmuser)
 
   # Ansi color code variables
   black="\e[30m"
